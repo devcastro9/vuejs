@@ -1,7 +1,50 @@
--- Select rows from a Table or View 'tblComp' in schema 'dbo'
-USE CONDOBO
-GO
-SELECT tblComp.EmpresaId, tblEmpresa.EmpresaDes AS 'EMPRESA' FROM tblComp, tblEmpresa
-WHERE tblEmpresa.EmpresaId = tblComp.EmpresaId
--- WHERE CompId BETWEEN 1 AND 10
-GO
+-- ======================================================================
+-- Grid Empresa
+/* SELECT tblEmpresa.EmpresaId, tblEmpresa.EmpresaDes, tblEmpresa.EmpresaRUC, tblEmpresa.Direccion, tblCiudad.CiudadId, tblCiudad.CiudadDes, tblEmpresa.Telefono1, tblEmpresa.Telefono2, tblEmpresa.Movil, tblEmpresa.Fax, tblEmpresa.CodPostal, tblEmpresa.Email, tblEmpresa.Web, tblEmpresa.MesAperturaId, tblMesApertura.MesDes As MesAperturaDes, tblEmpresa.MesCierreId, tblMesCierre.MesDes As MesCierreDes, tblMoneda.MonedaId, tblMoneda.MonedaDes, tblEstado.EstadoId, tblEstado.EstadoDes
+FROM tblEmpresa, tblCiudad, tblEstado, tblMes As tblMesApertura, tblMes As tblMesCierre, tblMoneda
+WHERE  tblEmpresa.CiudadId = tblCiudad.CiudadId  AND 
+    tblEmpresa.EstadoId = tblEstado.EstadoId  AND 
+    tblEmpresa.MesAperturaId = tblMesApertura.MesId AND
+    tblEmpresa.MesCierreId = tblMesCierre.MesId  AND
+    tblEmpresa.MonedaId = tblMoneda.MonedaId
+ORDER BY tblEmpresa.EmpresaDes  */
+-- ======================================================================
+-- Grid Plan (solo muestra el nivel 1, como tambien los que tiene PlanPadreId = 0)
+-- Primera ejecucion
+/* SELECT tblPlan.PlanId, tblPlan.EmpresaId, tblPlan.PlanDes, tblPlan.PlanCta, tblPlan.EsAna, tblPlan.PlanPadreId, tblPlan.Orden, tblPlan.Nivel, tblPlan.TipoPlanId, tblPlan.TipoGrupoId, tblPlan.MonedaId, tblPlan.TieneAnaAdd, tblPlan.MostrarAnaAdd, tblPlan.SucCCOId, tblPlan.EstadoId, tblPlan.sLastUpdate_id, tblPlan.dtLastUpdate_dt, tblPlan.iConcurrency_id
+FROM tblPlan
+WHERE  tblPlan.EmpresaId = 1 AND  tblPlan.PlanPadreId = 0
+ORDER BY tblPlan.Orden  */
+-- Ejecucion n + 1
+/* SELECT tblPlan.PlanId, tblPlan.EmpresaId, tblPlan.PlanDes, tblPlan.PlanCta, tblPlan.EsAna, tblPlan.PlanPadreId, tblPlan.Orden, tblPlan.Nivel, tblPlan.TipoPlanId, tblPlan.TipoGrupoId, tblPlan.MonedaId, tblPlan.TieneAnaAdd, tblPlan.MostrarAnaAdd, tblPlan.SucCCOId, tblPlan.EstadoId, tblPlan.sLastUpdate_id, tblPlan.dtLastUpdate_dt, tblPlan.iConcurrency_id
+FROM tblPlan  WHERE  tblPlan.EmpresaId = 1 AND  tblPlan.PlanPadreId = 1 */
+-- ======================================================================
+-- Grid Plan
+-- INSERT INTO secUser (secUser.UserId, secUser.AppId, secUser.GroupId, secUser.FirstName, secUser.LastName, secUser.LoginId, secUser.EstadoId, secUser.sLastUpdate_id, secUser.dtLastUpdate_dt, secUser.iConcurrency_id) VALUES (53, 2, 2, 'cont', 'admin', 'admin_c', 1, 'admin', GETDATE(), 1)
+SELECT secUser.UserId, secUser.AppId, secUser.GroupId, secUser.FirstName, secUser.LastName, secUser.LoginId, secUser.Pass, secUser.EstadoId, secUser.sLastUpdate_id, secUser.dtLastUpdate_dt, secUser.iConcurrency_id
+FROM secUser WHERE secUser.AppId = 2 AND secUser.EstadoId = 1 ORDER BY secUser.LastName
+-- ======================================================================
+-- Grid Comprobantes
+-- Con este SQL sale: Filas = 0
+/* SELECT tblComp.CompId, tblComp.EmpresaId, tblComp.GestionId, tblComp.Fecha, tblTipoComp.TipoCompId, tblTipoComp.TipoCompDes, tblEstado.EstadoId, tblEstado.EstadoDes, tblComp.CompNro, tblMoneda.MonedaId, tblMoneda.MonedaDes, tblComp.TipoCambio, tblComp.DebeBs, tblComp.DebeUs, tblComp.EntregadoA, tblComp.PorConcepto, invTipoNota.TipoNotaId, invTipoNota.TipoNotaDes, tblComp.NotaNro, tblComp.SinFac, tblComp.ConFac, tblTipoAsiento.TipoAsientoId, tblTipoAsiento.TipoAsientoDes
+FROM tblComp, tblTipoComp, tblMoneda, invTipoNota, tblTipoAsiento, tblEstado
+WHERE  tblComp.EmpresaId = 1 AND
+    tblComp.GestionId = 11 AND
+    tblComp.TipoCompId = tblTipoComp.TipoCompId  AND
+    tblComp.MonedaId = tblMoneda.MonedaId  AND
+    tblComp.TipoNotaId = invTipoNota.TipoNotaId  AND
+    tblComp.TipoAsientoId = tblTipoAsiento.TipoAsientoId  AND
+    tblComp.EstadoId = tblEstado.EstadoId
+ORDER BY tblComp.CompId DESC */
+-- Con este SQL sale el total. Filas: 47003
+/* SELECT tblComp.CompId, tblComp.EmpresaId, tblComp.GestionId, tblComp.Fecha, tblTipoComp.TipoCompId, tblTipoComp.TipoCompDes, tblEstado.EstadoId, tblEstado.EstadoDes, tblComp.CompNro, tblMoneda.MonedaId, tblMoneda.MonedaDes, tblComp.TipoCambio, tblComp.DebeBs, tblComp.DebeUs, tblComp.EntregadoA, tblComp.PorConcepto, invTipoNota.TipoNotaId, invTipoNota.TipoNotaDes, tblComp.NotaNro, tblComp.SinFac, tblComp.ConFac, tblTipoAsiento.TipoAsientoId, tblTipoAsiento.TipoAsientoDes
+FROM tblComp, tblTipoComp, tblMoneda, invTipoNota, tblTipoAsiento, tblEstado
+WHERE  
+    tblComp.TipoCompId = tblTipoComp.TipoCompId  AND
+    tblComp.MonedaId = tblMoneda.MonedaId  AND
+    tblComp.TipoNotaId = invTipoNota.TipoNotaId  AND
+    tblComp.TipoAsientoId = tblTipoAsiento.TipoAsientoId  AND
+    tblComp.EstadoId = tblEstado.EstadoId
+ORDER BY tblComp.CompId DESC
+ */
+ -- ======================================================================
