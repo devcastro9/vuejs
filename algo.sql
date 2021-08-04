@@ -25,8 +25,8 @@ FROM tblPlan  WHERE  tblPlan.EmpresaId = 1 AND  tblPlan.PlanPadreId = 1 */
 -- ======================================================================
 -- Grid Plan
 -- INSERT INTO secUser (secUser.UserId, secUser.AppId, secUser.GroupId, secUser.FirstName, secUser.LastName, secUser.LoginId, secUser.EstadoId, secUser.sLastUpdate_id, secUser.dtLastUpdate_dt, secUser.iConcurrency_id) VALUES (53, 2, 2, 'cont', 'admin', 'admin_c', 1, 'admin', GETDATE(), 1)
-SELECT secUser.UserId, secUser.AppId, secUser.GroupId, secUser.FirstName, secUser.LastName, secUser.LoginId, secUser.Pass, secUser.EstadoId, secUser.sLastUpdate_id, secUser.dtLastUpdate_dt, secUser.iConcurrency_id
-FROM secUser WHERE secUser.AppId = 2 AND secUser.EstadoId = 1 ORDER BY secUser.LastName
+/* SELECT secUser.UserId, secUser.AppId, secUser.GroupId, secUser.FirstName, secUser.LastName, secUser.LoginId, secUser.Pass, secUser.EstadoId, secUser.sLastUpdate_id, secUser.dtLastUpdate_dt, secUser.iConcurrency_id
+FROM secUser WHERE secUser.AppId = 2 AND secUser.EstadoId = 1 ORDER BY secUser.LastName */
 -- ======================================================================
 -- Grid Comprobantes
 -- Con este SQL sale: Filas = 0
@@ -58,11 +58,10 @@ FROM fc_relacionador_ingresos as fc, tblPlan as deb, tblPlan as cre
 WHERE fc.Cta_Cred = deb.PlanId AND fc.Cta_Cred = cre.PlanId
 ORDER BY fc.correlativo */
 
-USE [CONDOBO]
+/* USE [CONDOBO]
 GO
 SET NOCOUNT ON
 INSERT INTO [dbo].[correlativo_comp] ([tipoCompId], [descCorrel], [mes], [correlativo])
 VALUES (1, 'Ingreso', MONTH(GETDATE()), 0), (2, 'Egreso', MONTH(GETDATE()), 0), (3, 'Traspaso', MONTH(GETDATE()), 0)
-GO
-
+GO */
 

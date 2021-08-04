@@ -1,10 +1,7 @@
-USE CONDOBO
+/* USE [CONDOBO]
 GO
--- Update rows in table 'fc_relacionador_ingresos'
-UPDATE fc_relacionador_ingresos
-SET
-    
-    [Colum2] = Colum2_Value
-    -- add more columns and values here
-WHERE 1 = 1
-GO
+INSERT INTO [dbo].[correlativo_comp]
+([empresaId], [tipoCompId], [descCorrel], [mes], [correlativo])
+VALUES (2, 1, 'Ingreso', 8, 0), (2, 2, 'Egreso', 8, 0), (2, 3, 'Traspaso', 8, 0)
+GO */
+-- ===============================================================
