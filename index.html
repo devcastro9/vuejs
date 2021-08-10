@@ -13,6 +13,17 @@
         <p>{{ message }}</p>
         <input v-model="message">
     </div>
+    <hr>
+    <div id="app-2">
+        <span v-bind:title="message">
+            Mueva el mouse sobre mi
+        </span>
+    </div>
+    <hr>
+    <div id="app-3">
+        <input type="checkbox" v-model="seen">
+        <span v-if="seen">Ahora me ves</span>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
